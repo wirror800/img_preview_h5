@@ -1,0 +1,41 @@
+#preview-pane {
+  display: block;
+  position: absolute;
+  z-index: 2000;
+  top: 20px;
+  right: 50px;
+  padding: 6px;
+  border: 1px rgba(0,0,0,.4) solid;
+  background-color: white;
+
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+
+  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+}
+#preview-buttons {
+  display: block;
+  position: absolute;
+  z-index: 2000;
+  top: 250px;
+  right: 90px;
+}
+#preview-pane .preview-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+@media (max-width: 767px){
+  #preview-pane{
+    display: none;
+  }
+  #preview-buttons {
+    position: static;
+  }
+  #img-container {
+    overflow: auto;
+  }
+}

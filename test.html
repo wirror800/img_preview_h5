@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link href="jcrop/css/jquery.Jcrop.min.css?v=1.0" rel="stylesheet">
+        <link href="upload/preview.css?v=1.0" rel="stylesheet">
+        <script src="js/jquery.js?v=1.0"></script>
+        <script src="js/jquery-ui.js?v=1.0"></script>
+        <script src="jcrop/js/jquery.color.js?v=1.0"></script>
+        <script src="jcrop/js/jquery.Jcrop.min.js?v=1.0"></script>
+        <script src="upload/jquery.iframe-transport.js?v=1.0"></script>
+        <script src="upload/jquery.fileupload.js?v=1.0"></script>
+        <script src="upload/preview.js?v=1.0"></script>
+    </head>
+    <body>
+    <div>
+        <input id="fileupload" type="file" name="picture"/>
+        <div id="progress" class="overlay"/>
+    </div>
+    <script type="text/javascript">
+    $('#fileupload').fileupload({
+      dropZone:null,
+      pasteZone:null,
+      url: '/upload',
+      dataType: 'json',
+      add: function (e, data) {
+        if($.support.localPreview){
+          var file = data.files[0];
+          $(this).previewImg({
+            uploadFile: file, 
+            uploadData: data,
+            width: 220,
+            height: 220
+          });
+        }else{
+          if (e.isDefaultPrevented()) {
+            return false;
+          }
+          data.process().done(function () {
+            data.submit();
+          });
+        }
+      },
+      done: function (e, data) {
+          if(data.result.status){
+            //do sth.
+          }else{
+            alert('上传出错!');
+          }
+      },
+      progressall: function (e, data) {
+          var progress = parseInt(data.loaded / data.total * 100, 10);
+          $('#progress').fadeIn();
+          $('#progress').css(
+              'width',
+              progress + '%'
+          );
+      }
+    }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+    </script>
+    </body>
+</html>
